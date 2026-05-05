@@ -30,16 +30,21 @@
     };
 
     chrome.runtime.sendMessage({ action: 'saveJob', job }, (response) => {
-      if (response?.success) {
-        button.innerText = '✅ Saved!';
-        button.style.background = '#16A34A';
+        if (response?.duplicate) {
+            button.innerText = '⚠️ Already saved';
+            button.style.background = '#D97706';
+        } else if (response?.success) {
+            button.innerText = '✅ Saved!';
+            button.style.background = '#16A34A';
+        }
         setTimeout(() => {
-          button.innerText = '💼 Save Job';
-          button.style.background = '#2563EB';
+            button.innerText = '💼 Save Job';
+            button.style.background = '#2563EB';
         }, 2000);
-      }
     });
   });
 
   document.body.appendChild(button);
 })();
+
+
