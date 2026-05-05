@@ -22,12 +22,27 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   `;
 
+    function getJobData() {
+        // LinkedIn specific selectors
+        const title =
+            document.querySelector('.job-details-jobs-unified-top-card__job-title h1')?.innerText ||
+            document.querySelector('h1.t-24')?.innerText ||
+            document.title;
+
+        const company =
+            document.querySelector('.job-details-jobs-unified-top-card__company-name a')?.innerText ||
+            document.querySelector('.job-details-jobs-unified-top-card__company-name')?.innerText ||
+            window.location.hostname;
+
+        return {
+            title: title.trim(),
+            company: company.trim(),
+            url: window.location.href,
+        };
+    }
+
   button.addEventListener('click', () => {
-    const job = {
-      title: document.title,
-      company: window.location.hostname,
-      url: window.location.href,
-    };
+    const job = getJobData();
 
     chrome.runtime.sendMessage({ action: 'saveJob', job }, (response) => {
         if (response?.duplicate) {
