@@ -184,3 +184,32 @@ header h1 {
   color: #94A3B8;
   font-size: 13px;
 }
+
+.metrics {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.metric {
+  flex: 1;
+  background: white;
+  border-radius: 8px;
+  padding: 8px 4px;
+  text-align: center;
+  border: 1px solid #E2E8F0;
+}
+
+.metric-value {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  color: #7C3AED;
+}
+
+.metric-label {
+  display: block;
+  font-size: 10px;
+  color: #64748B;
+  margin-top: 2px;
+}

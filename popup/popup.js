@@ -92,6 +92,28 @@ function renderJobs() {
   });
 }
 
+function renderMetrics() {
+  const applied = allJobs.filter(j => j.status !== 'Saved').length;
+
+  const calc = (status) => {
+    if (applied === 0) return '0%';
+    const count = allJobs.filter(j => j.status === status).length;
+    return Math.round((count / applied) * 100) + '%';
+  };
+
+  document.getElementById('metric-interview').innerText = calc('Interview');
+  document.getElementById('metric-offer').innerText = calc('Offer');
+  document.getElementById('metric-rejected').innerText = calc('Rejected');
+}
+
+function renderStats() {
+  STATUSES.forEach(status => {
+    const count = allJobs.filter(j => j.status === status).length;
+    document.getElementById(`count-${status.toLowerCase()}`).innerText = count;
+  });
+  renderMetrics();
+}
+
 // Event listeners
 document.getElementById('search').addEventListener('input', renderJobs);
 document.getElementById('filter-status').addEventListener('change', renderJobs);
