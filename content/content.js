@@ -22,6 +22,32 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   `;
 
+    let isDragging = false;
+    let hasDragged = false;
+    let offsetX, offsetY;
+
+    button.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    hasDragged = false;
+    offsetX = e.clientX - button.getBoundingClientRect().left;
+    offsetY = e.clientY - button.getBoundingClientRect().top;
+    button.style.cursor = 'grabbing';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    hasDragged = true;
+    button.style.right = 'auto';
+    button.style.bottom = 'auto';
+    button.style.left = `${e.clientX - offsetX}px`;
+    button.style.top = `${e.clientY - offsetY}px`;
+    });
+
+    document.addEventListener('mouseup', () => {
+    isDragging = false;
+    button.style.cursor = 'pointer';
+    });
+
     function getJobData() {
         // LinkedIn specific selectors
         const title =
@@ -42,19 +68,26 @@
     }
 
   button.addEventListener('click', () => {
+    if (hasDragged) {
+        hasDragged = false;
+        return;
+    }
     const job = getJobData();
 
+    if (!chrome.runtime?.sendMessage) return;
+
     chrome.runtime.sendMessage({ action: 'saveJob', job }, (response) => {
+        if (chrome.runtime.lastError) return;
         if (response?.duplicate) {
-            button.innerText = '⚠️ Already saved';
-            button.style.background = '#D97706';
+        button.innerText = '⚠️ Already saved';
+        button.style.background = '#D97706';
         } else if (response?.success) {
-            button.innerText = '✅ Saved!';
-            button.style.background = '#16A34A';
+        button.innerText = '✅ Saved!';
+        button.style.background = '#16A34A';
         }
         setTimeout(() => {
-            button.innerText = '💼 Save Job';
-            button.style.background = '#2563EB';
+        button.innerText = '💼 Save Job';
+        button.style.background = '#2563EB';
         }, 2000);
     });
   });
