@@ -44,6 +44,7 @@ function renderJobs() {
             <span class="job-title">${job.title}</span>
         </div>
         <div class="job-company">${job.company}</div>
+        <div class="job-date">${new Date(job.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</div>
         <div class="job-card-footer">
             <select class="status-select" data-id="${job.id}">
             ${STATUSES.map(s => `

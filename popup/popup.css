@@ -231,3 +231,9 @@ header h1 {
 .job-notes:focus {
   border-color: #2563EB;
 }
+
+.job-date {
+  font-size: 11px;
+  color: #94A3B8;
+  margin-bottom: 8px;
+}
