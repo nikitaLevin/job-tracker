@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Job Tracker</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="container">
+
+    <header>
+      <h1>💼 Job Tracker</h1>
+    </header>
+
+    <div class="stats">
+      <div class="stat" data-status="Saved">
+        <span class="stat-count" id="count-saved">0</span>
+        <span class="stat-label">Saved</span>
+      </div>
+      <div class="stat" data-status="Applied">
+        <span class="stat-count" id="count-applied">0</span>
+        <span class="stat-label">Applied</span>
+      </div>
+      <div class="stat" data-status="Interview">
+        <span class="stat-count" id="count-interview">0</span>
+        <span class="stat-label">Interview</span>
+      </div>
+      <div class="stat" data-status="Offer">
+        <span class="stat-count" id="count-offer">0</span>
+        <span class="stat-label">Offer</span>
+      </div>
+      <div class="stat" data-status="Rejected">
+        <span class="stat-count" id="count-rejected">0</span>
+        <span class="stat-label">Rejected</span>
+      </div>
+    </div>
+
+    <div class="metrics" id="metrics">
+        <div class="metric">
+            <span class="metric-value" id="metric-interview">0%</span>
+            <span class="metric-label">Interview rate</span>
+        </div>
+        <div class="metric">
+            <span class="metric-value" id="metric-offer">0%</span>
+            <span class="metric-label">Offer rate</span>
+        </div>
+        <div class="metric">
+            <span class="metric-value" id="metric-rejected">0%</span>
+            <span class="metric-label">Rejection rate</span>
+        </div>
+    </div>
+
+    <div class="filters">
+      <input type="text" id="search" placeholder="Search by title or company..." />
+      <select id="filter-status">
+        <option value="all">All</option>
+        <option value="Saved">Saved</option>
+        <option value="Applied">Applied</option>
+        <option value="Interview">Interview</option>
+        <option value="Offer">Offer</option>
+        <option value="Rejected">Rejected</option>
+      </select>
+    </div>
+
+    <div class="jobs-list" id="jobs-list"></div>
+
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
