@@ -40,21 +40,26 @@ function renderJobs() {
 
   list.innerHTML = filtered.map(job => `
     <div class="job-card" data-id="${job.id}">
-      <div class="job-card-header">
-        <span class="job-title">${job.title}</span>
-      </div>
-      <div class="job-company">${job.company}</div>
-      <div class="job-card-footer">
-        <select class="status-select" data-id="${job.id}">
-          ${STATUSES.map(s => `
-            <option value="${s}" ${job.status === s ? 'selected' : ''}>${s}</option>
-          `).join('')}
-        </select>
-        <div class="job-actions">
-          <button class="btn-open" data-url="${job.url}">Open</button>
-          <button class="btn-delete" data-id="${job.id}">Delete</button>
+        <div class="job-card-header">
+            <span class="job-title">${job.title}</span>
         </div>
-      </div>
+        <div class="job-company">${job.company}</div>
+        <div class="job-card-footer">
+            <select class="status-select" data-id="${job.id}">
+            ${STATUSES.map(s => `
+                <option value="${s}" ${job.status === s ? 'selected' : ''}>${s}</option>
+            `).join('')}
+            </select>
+            <div class="job-actions">
+            <button class="btn-open" data-url="${job.url}">Open</button>
+            <button class="btn-delete" data-id="${job.id}">Delete</button>
+            </div>
+        </div>
+        <textarea
+            class="job-notes"
+            data-id="${job.id}"
+            placeholder="Add notes..."
+        >${job.notes}</textarea>
     </div>
   `).join('');
 
@@ -88,6 +93,17 @@ function renderJobs() {
       allJobs = updated;
       renderStats();
       renderJobs();
+    });
+  });
+
+  document.querySelectorAll('.job-notes').forEach(textarea => {
+    textarea.addEventListener('blur', async (e) => {
+        const id = e.target.dataset.id;
+        const notes = e.target.value;
+        const result = await chrome.storage.local.get('jobs');
+        const updated = result.jobs.map(j => j.id === id ? { ...j, notes } : j);
+        await chrome.storage.local.set({ jobs: updated });
+        allJobs = updated;
     });
   });
 }
