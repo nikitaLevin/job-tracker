@@ -3,7 +3,7 @@
   "name": "Job Tracker",
   "version": "1.0.0",
   "description": "Track your job applications directly in the browser",
-  "permissions": ["storage", "activeTab"],
+  "permissions": ["storage"],
   "host_permissions": ["https://www.linkedin.com/*"],
   "action": {
     "default_popup": "popup/popup.html",
